@@ -9,3 +9,7 @@
 110 Using Composition to make a Reusable Box
 
 111 Passing element as property
+
+112 Building a Reusable Star Rating Component
+
+113 Creating the Starts

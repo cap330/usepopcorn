@@ -9,5 +9,6 @@ createRoot(document.getElementById('root')).render(
     {/* <App /> */}
     <StarRating maxRating={5} />
     <StarRating maxRating={10} />
+    <StarRating />
   </StrictMode>
 );
