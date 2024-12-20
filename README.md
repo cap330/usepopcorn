@@ -17,3 +17,5 @@
 114 Handling Hover Events over stars
 
 116 Improving Reusability With Props
+
+117 PropTypes (Legacy)
