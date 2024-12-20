@@ -13,3 +13,5 @@
 112 Building a Reusable Star Rating Component
 
 113 Creating the Starts
+
+114 Handling Hover Events over stars

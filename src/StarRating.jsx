@@ -18,6 +18,7 @@ const textStyle = {
 
 export default function StarRating({ maxRating = 5 }) {
   const [rating, setRating] = useState(0);
+  const [temRating, setTemRating] = useState(0);
 
   function handleRating(rating) {
     setRating(rating);
@@ -27,10 +28,16 @@ export default function StarRating({ maxRating = 5 }) {
     <div style={containerStyle}>
       <div style={starContainerStyle}>
         {Array.from({ length: maxRating }, (_, i) => (
-          <Star key={i} onRate={() => handleRating(i + 1)} full={rating > i} />
+          <Star
+            key={i}
+            onRate={() => handleRating(i + 1)}
+            onHoverIn={() => setTemRating(i + 1)}
+            onHoverOut={() => setTemRating(0)}
+            full={temRating ? temRating > i : rating > i}
+          />
         ))}
       </div>
-      <p style={textStyle}>{rating || ''}</p>
+      <p style={textStyle}>{temRating || rating || ''}</p>
     </div>
   );
 }
@@ -65,9 +72,9 @@ const starStyle = {
 //   );
 // }
 
-function Star({ onRate, full }) {
+function Star({ onRate, full, onHoverIn, onHoverOut }) {
   return (
-    <span role="button" style={starStyle} onClick={onRate}>
+    <span role="button" style={starStyle} onClick={onRate} onMouseEnter={onHoverIn} onMouseLeave={onHoverOut}>
       {full ? '★' : '☆'}
     </span>
   );
