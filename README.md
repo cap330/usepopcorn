@@ -7,3 +7,5 @@
 109 Components, Composition and Reusability - Fixing Prop Drilling With Comosition
 
 110 Using Composition to make a Reusable Box
+
+111 Passing element as property
