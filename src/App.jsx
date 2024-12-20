@@ -47,28 +47,32 @@ const tempWatchedData = [
 
 const average = arr => arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
+// STRUCTURAL COMPONENT
 export default function App() {
+  const [movies, setMovies] = useState(tempMovieData);
   return (
     <>
-      <NavBar />
-      <Main />
+      <NavBar movies={movies} />
+      <Main movies={movies} />
     </>
   );
 }
 
-function NavBar() {
+// STRUCTURAL COMPONENT
+function NavBar({ movies }) {
   return (
     <>
       <nav className="nav-bar">
         <Logo />
         <Search />
-        <NumResults />
+        <NumResults movies={movies} />
       </nav>
       ;
     </>
   );
 }
 
+// STATELESS Presentational component
 function Logo() {
   return (
     <div className="logo">
@@ -78,8 +82,10 @@ function Logo() {
   );
 }
 
+// STATEFULL Component
 function Search() {
   const [query, setQuery] = useState('');
+
   return (
     <input
       className="search"
@@ -91,8 +97,9 @@ function Search() {
   );
 }
 
-function NumResults() {
-  const [movies, setMovies] = useState(tempMovieData);
+// STATELESS Presentational component
+function NumResults({ movies }) {
+  //const [movies, setMovies] = useState(tempMovieData);
 
   return (
     <p className="num-results">
@@ -101,18 +108,18 @@ function NumResults() {
   );
 }
 
-function Main() {
+function Main({ movies }) {
   return (
     <>
       <main className="main">
-        <ListBox />
+        <ListBox movies={movies} />
         <WatchBox />
       </main>
     </>
   );
 }
 
-function ListBox() {
+function ListBox({ movies }) {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -120,14 +127,12 @@ function ListBox() {
       <button className="btn-toggle" onClick={() => setIsOpen1(open => !open)}>
         {isOpen1 ? '–' : '+'}
       </button>
-      {isOpen1 && <MoviesList />}
+      {isOpen1 && <MoviesList movies={movies} />}
     </div>
   );
 }
 
-function MoviesList() {
-  const [movies, setMovies] = useState(tempMovieData);
-
+function MoviesList({ movies }) {
   return (
     <ul className="list">
       {movies?.map(movie => (
@@ -153,9 +158,7 @@ function Movie({ movie }) {
 }
 
 function WatchBox() {
-  const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
-  const [isOpen1, setIsOpen1] = useState(true);
   const [isOpen2, setIsOpen2] = useState(true);
 
   return (
