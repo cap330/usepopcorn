@@ -19,3 +19,5 @@
 116 Improving Reusability With Props
 
 117 PropTypes (Legacy)
+
+146 Synchronizing Queries With Movie Data

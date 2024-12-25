@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const tempMovieData = [
   {
@@ -46,89 +46,20 @@ const tempWatchedData = [
 ];
 
 const average = arr => arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
-const KEY = '1e8be215';
 
 // STRUCTURAL COMPONENT
 export default function App() {
-  const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [query, setQuery] = useState('home alone');
-
-  const tempQuery = 'interstellar';
-
-  /*
-  useEffect(function () {
-    console.log('A');
-  }, []);
-
-  useEffect(function () {
-    console.log('B');
-  });
-
-  useEffect(
-    function () {
-      console.log('D');
-    },
-    [query]
-  );
-
-  console.log('C');
-
-  */
-  // useEffect(function () {
-  //   fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
-  //     .then(res => res.json())
-  //     .then(data => setMovies(data.Search));
-  // }, []);
-
-  useEffect(
-    function () {
-      async function fetchMovies() {
-        try {
-          setError('');
-          setIsLoading(true);
-          const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`);
-
-          if (!res.ok) throw new Error('Something went wrong with fetching movies');
-
-          const data = await res.json();
-
-          if (data.Response === 'False') throw new Error(data.Error);
-          setMovies(data.Search);
-          //console.log('MOVIES : ', movies);
-          //console.log(data);
-        } catch (err) {
-          console.error(err);
-          setError(err.message);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-
-      if (query.length < 3) {
-        setMovies([]);
-        setError('');
-        return;
-      }
-      fetchMovies();
-    },
-    [query]
-  );
-
+  const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
   return (
     <>
-      <NavBar query={query} setQuery={setQuery}>
+      <NavBar>
         <NumResults movies={movies} />
       </NavBar>
       <Main>
         {/* <Box element={<MoviesList movies={movies} />} /> */}
         <Box>
-          {/* {isLoading ? <Loader /> : <MoviesList movies={movies} />} */}
-          {isLoading && <Loader />}
-          {!isLoading && !error && <MoviesList movies={movies} />}
-          {error && <ErrorMessage message={error} />}
+          <MoviesList movies={movies} />
         </Box>
         <Box>
           <WatchedSummary watched={watched} />
@@ -147,26 +78,13 @@ export default function App() {
   );
 }
 
-function ErrorMessage({ message }) {
-  return (
-    <p className="error">
-      <span>🛑</span>
-      {message}
-    </p>
-  );
-}
-
-function Loader() {
-  return <p className="loader">Loading...</p>;
-}
-
 // STRUCTURAL COMPONENT
-function NavBar({ children, query, setQuery }) {
+function NavBar({ children }) {
   return (
     <>
       <nav className="nav-bar">
         <Logo />
-        <Search query={query} setQuery={setQuery} />
+        <Search />
         {children}
       </nav>
       ;
@@ -185,7 +103,9 @@ function Logo() {
 }
 
 // STATEFULL Component
-function Search({ query, setQuery }) {
+function Search() {
+  const [query, setQuery] = useState('');
+
   return (
     <input
       className="search"
