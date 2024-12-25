@@ -53,10 +53,10 @@ const KEY = '1e8be215';
 // STRUCTURAL COMPONENT
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [query, setQuery] = useState('home alone');
+  const [query, setQuery] = useState('');
   const [selectedId, setSelectedId] = useState(null);
 
   function onSelectMovie(id) {
@@ -104,6 +104,7 @@ export default function App() {
   useEffect(
     function () {
       const controller = new AbortController();
+
       async function fetchMovies() {
         try {
           setError('');
@@ -134,6 +135,8 @@ export default function App() {
         setError('');
         return;
       }
+
+      onCloseMovie();
       fetchMovies();
 
       return function () {
@@ -369,6 +372,24 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched, onDelet
 
   useEffect(
     function () {
+      function callback(e) {
+        if (e.code === 'Escape') {
+          onCloseMovie();
+          //console.log('CLOSED');
+        }
+      }
+
+      document.addEventListener('keydown', callback);
+
+      return function () {
+        document.removeEventListener('keydown', callback);
+      };
+    },
+    [onCloseMovie]
+  );
+
+  useEffect(
+    function () {
       setIsLoading(true);
       async function getMovieDetails() {
         const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`);
@@ -389,7 +410,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched, onDelet
 
       return function () {
         document.title = 'usePopcorn';
-        console.log(`Clean up effect for movie ${title}`);
+        //console.log(`Clean up effect for movie ${title}`);
       };
     },
     [title]
