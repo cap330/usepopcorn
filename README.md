@@ -23,3 +23,5 @@
 146 Synchronizing Queries With Movie Data
 
 147 Selecting a Movie
+
+148 Loading Movie Details
