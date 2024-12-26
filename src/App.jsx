@@ -255,6 +255,18 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched, onDelet
   const [userRating, setUserRating] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const countRef = useRef(0);
+  let count = 0;
+
+  useEffect(
+    function () {
+      if (userRating) countRef.current++;
+      if (userRating) count++;
+      console.log(countRef.current, count);
+    },
+    [userRating]
+  );
+
   //const movieWatched = watched.some(film => film.imdbID === selectedId);
   const isWatched = watched.map(film => film.imdbID).includes(selectedId);
 
@@ -290,6 +302,8 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched, onDelet
       imdbRating: Number(imdbRating),
       runtime: Number(runtime.split(' ').at(0)),
       userRating,
+      countRatingDeisions: countRef.current,
+      count,
     };
 
     onAddWatched(newWatchedMovie);
