@@ -35,3 +35,7 @@
 153 Cleaning Up Data Fetching
 
 154 One More Effect Listening to a Keypress
+
+NEXT PART THE RULES OF HOOKS IN PRACTICE
+
+159 The rules of hooks in practice (APP.jsx)
