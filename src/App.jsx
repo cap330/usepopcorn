@@ -1,6 +1,7 @@
 //import { use } from 'react';
 import { useEffect, useState } from 'react';
 import StarRating from './StarRating';
+import { use } from 'react';
 
 const average = arr => arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 const KEY = '1e8be215';
@@ -40,14 +41,14 @@ export default function App() {
     setWatched(watched => watched.filter(movie => movie.imdbID !== id));
   }
 
-  // useEffect(
-  //   function () {
-  //     localStorage.setItem('watched', JSON.stringify(watched));
-  //   },
-  //   [watched]
-  // );
+  useEffect(
+    function () {
+      localStorage.setItem('watched', JSON.stringify(watched));
+    },
+    [watched]
+  );
 
-  useEffect(() => localStorage.setItem('watched', JSON.stringify(watched)), [watched]);
+  //useEffect(() => localStorage.setItem('watched', JSON.stringify(watched)), [watched]);
 
   useEffect(
     function () {
@@ -160,6 +161,12 @@ function Logo() {
 
 // STATEFULL Component
 function Search({ query, setQuery }) {
+  useEffect(function () {
+    const el = document.querySelector('.search');
+    console.log(el);
+    el.focus();
+  }, []);
+
   return (
     <input
       className="search"

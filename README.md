@@ -45,10 +45,12 @@ NEXT PART THE RULES OF HOOKS IN PRACTICE
 ..Using callback function to set value in useState (reading from local storage)
 ....const [watched, setWatched] = useState(() => JSON.parse(localStorage.getItem('watched')));
 
-..Using useEffect to update lockalStorage each time [watched] is changing (adding and deleting)
+..Using useEffect to update localStorage each time [watched] is changing (adding and deleting)
 ..useEffect(
 ....function () {
 ........localStorage.setItem('watched', JSON.stringify(watched));
 ......},
 ......[watched]
 ..);
+
+162 How NOT to Select DOM elements in react
