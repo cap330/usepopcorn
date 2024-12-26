@@ -39,3 +39,16 @@
 NEXT PART THE RULES OF HOOKS IN PRACTICE
 
 159 The rules of hooks in practice (APP.jsx)
+
+160 Initilazing state with a callback
+
+..Using callback function to set value in useState (reading from local storage)
+....const [watched, setWatched] = useState(() => JSON.parse(localStorage.getItem('watched')));
+
+..Using useEffect to update lockalStorage each time [watched] is changing (adding and deleting)
+..useEffect(
+....function () {
+........localStorage.setItem('watched', JSON.stringify(watched));
+......},
+......[watched]
+..);
